@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-
+import { QuizServiceService } from '../../services/quiz-service.service';
+import { Quiz } from '../../models/quiz';
+import { Answer } from '../../models/answer';
 @Component({
   selector: 'app-dashboard',
   imports: [],
@@ -8,7 +10,11 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
-  constructor() { }
+
+  quiz: Quiz | undefined;
+  answers:Answer[]=[]; ;
+
+  constructor(private quizService:QuizServiceService) { }
 
   ngOnInit() {
     this.generateQuiz();

@@ -1,6 +1,6 @@
 import {Answer} from './answer';
 
-export interface quiz
+export interface Quiz
 {
     id:number,
     question:string,
