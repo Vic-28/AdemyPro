@@ -1,8 +1,8 @@
-import answer
+import {Answer} from './answer';
 
-export class quiz
+export interface quiz
 {
     id:number,
     question:string,
-    answer:{},
+    answers:Answer[]
 }
