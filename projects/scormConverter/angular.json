@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "quiz": {
+    "scormConverter": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/quiz",
+            "outputPath": "dist/scorm-converter",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "quiz:build:production"
+              "buildTarget": "scormConverter:build:production"
             },
             "development": {
-              "buildTarget": "quiz:build:development"
+              "buildTarget": "scormConverter:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -105,6 +105,6 @@
     }
   },
   "cli": {
-    "analytics": "73792244-f643-4b79-9907-702b47083da7"
+    "analytics": "bf859872-5d6a-4d4a-b1ab-538b6658d725"
   }
 }

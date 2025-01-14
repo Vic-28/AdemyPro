@@ -9,5 +9,5 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'quiz';
+  title = 'scormConverter';
 }

@@ -1,0 +1,71 @@
+.dashboard {
+    position: relative;
+  
+    .scormConverter {
+      text-align: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      max-width: 400px;
+      margin: 50px auto;
+  
+      h2 {
+        margin-bottom: 10px;
+      }
+  
+      .scormConverter__input {
+        margin-top: 20px;
+  
+        label {
+          display: block;
+          margin-bottom: 10px;
+          font-weight: bold;
+        }
+  
+        input[type="file"] {
+          display: block;
+          margin: 0 auto;
+        }
+      }
+    }
+  
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      z-index: 1000;
+  
+      p {
+        margin-top: 10px;
+        font-size: 18px;
+      }
+  
+      .spinner {
+        border: 8px solid rgba(255, 255, 255, 0.3);
+        border-top: 8px solid #fff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+    }
+  
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+  
