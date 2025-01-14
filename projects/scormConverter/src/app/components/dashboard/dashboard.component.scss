@@ -1,5 +1,6 @@
 .dashboard {
     position: relative;
+    font-family: system-ui;
   
     .scormConverter {
       text-align: center;
@@ -12,6 +13,7 @@
   
       h2 {
         margin-bottom: 10px;
+        font-size: 30px;
       }
   
       .scormConverter__input {
