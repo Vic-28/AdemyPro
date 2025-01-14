@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&display=swap');
+
+.dashboard
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    place-content: center;
+}
+
+
+.quiz
+{
+    border: solid 1px #794713;
+    background-color: white;
+    border-radius: 5%;
+    width: 557px;
+    height: 563px;
+    box-shadow: 0px 18px 0px #F09D46;
+    margin-top: 7%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+//Letras del titulo
+
+.quiz-title
+{
+    align-items: center;
+    justify-items: center;
+    font-size: 50px;
+    font-family: "Modak", serif ;
+    margin-top: -10%;
+}
+
+.quiz-title p 
+{
+    color: #F09D46;
+    text-shadow: 
+    2px 2px 0px black,  
+   -2px 2px 0px black,  
+   -2px -2px 0px black , 
+    2px -2px 0px black; 
+}
+
+
+.quiz-question
+{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    font-size: 50px;
+    color:#794713 ;
+    border: solid;
+    width: 466px;
+    height: 64px;
+}
+
+
+.quiz-answers
+{
+    align-items: center;
+    justify-items: center;
+}
+
+.quiz-answers-answer
+{
+    width: 466px;
+    height: 64px;
+    border: solid 1px #794713;
+    background-color:#F09D46;
+    text-align: left;
+}
+

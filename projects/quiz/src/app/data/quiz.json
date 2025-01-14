@@ -1,0 +1,75 @@
+[
+    {
+      "id": 1,
+      "question": "What city is the capital of France?",
+      "answers": [
+        {
+          "id": 1,
+          "quizId": 1,
+          "answer": "Paris",
+          "isCorrect": true
+        },
+        {
+          "id": 2,
+          "quizId": 1,
+          "answer": "London",
+          "isCorrect": false
+        },
+        {
+          "id": 3,
+          "quizId": 1,
+          "answer": "Madrid",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "question": "What team is from Spain?",
+      "answers": [
+        {
+          "id": 1,
+          "quizId": 2,
+          "answer": "Real Madrid",
+          "isCorrect": true
+        },
+        {
+          "id": 2,
+          "quizId": 2,
+          "answer": "Manchester City",
+          "isCorrect": false
+        },
+        {
+          "id": 3,
+          "quizId": 2,
+          "answer": "Juventus",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "question": " Who is a member of the Simpsons family?",
+      "answers": [
+        {
+          "id": 1,
+          "quizId": 3,
+          "answer": "Homer",
+          "isCorrect": true
+        },
+        {
+          "id": 2,
+          "quizId": 3,
+          "answer": "Bart",
+          "isCorrect": false
+        },
+        {
+          "id": 3,
+          "quizId": 3,
+          "answer": "Flanders",
+          "isCorrect": false
+        }
+      ]
+    }
+  ]
+  
