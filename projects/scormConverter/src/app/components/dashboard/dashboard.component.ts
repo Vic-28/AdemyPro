@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import JSZip from 'jszip';
-import { saveAs } from 'file-saver'; // Asegúrate de instalar este paquete: npm install file-saver
+import { saveAs } from 'file-saver'; 
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +11,7 @@ import { saveAs } from 'file-saver'; // Asegúrate de instalar este paquete: npm
 })
 export class DashboardComponent {
   isLoading: boolean = false;
-  mp4Files: { name: string, content: Blob }[] = []; // Almacena los archivos como blobs
+  mp4Files: { name: string, content: Blob }[] = []; 
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -21,7 +21,7 @@ export class DashboardComponent {
     }
 
     this.isLoading = true;
-    this.mp4Files = []; // Limpiar la lista de archivos previos
+    this.mp4Files = []; 
 
     const file = input.files[0];
     const zip = new JSZip();
@@ -41,7 +41,7 @@ export class DashboardComponent {
             }
           });
 
-          // Esperar a que se procesen todos los archivos
+          
           Promise.all(promises).then(() => {
             this.isLoading = false;
           });
@@ -68,11 +68,11 @@ export class DashboardComponent {
 
     const zip = new JSZip();
     this.mp4Files.forEach((file) => {
-      zip.file(file.name, file.content); // Agregar cada archivo al ZIP
+      zip.file(file.name, file.content);
     });
 
     zip.generateAsync({ type: 'blob' }).then((zipBlob) => {
-      saveAs(zipBlob, 'mp4_files.zip'); // Descargar el archivo ZIP
+      saveAs(zipBlob, 'mp4_files.zip'); 
     }).catch((error) => {
       console.error('Error creando el archivo ZIP:', error);
     });
