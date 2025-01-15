@@ -84,12 +84,21 @@ export class DashboardComponent {
     const doc = parser.parseFromString(htmlContent, 'text/html');
     const matches = htmlContent.match(/"fileName":"([^"]*\.mp4)"/g);
     if (matches) {
-      matches.forEach((match) => {
-        const title = match.match(/"fileName":"([^"]*\.mp4)"/)?.[1];
-        if (title) {
-          this.chapterTitles.push(title);
+      const titles = matches.map((match) => {
+        return match.match(/"fileName":"([^"]*\.mp4)"/)?.[1];
+      }).filter(title => title !== undefined) as string[];
+
+      // Ordenar los títulos de forma ascendente
+      titles.sort((a, b) => {
+        const numA = a.match(/\d+/);
+        const numB = b.match(/\d+/);
+        if (numA && numB) {
+          return parseInt(numA[0], 10) - parseInt(numB[0], 10);
         }
+        return a.localeCompare(b);
       });
+
+      this.chapterTitles.push(...titles);
     }
   }
 
