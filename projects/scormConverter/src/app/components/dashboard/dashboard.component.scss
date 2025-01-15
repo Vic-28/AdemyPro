@@ -1,73 +1,163 @@
 .dashboard {
-    position: relative;
-    font-family: system-ui;
+  position: relative;
+  font-family: system-ui;
+
   
-    .scormConverter {
-      text-align: center;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #f9f9f9;
-      max-width: 400px;
-      margin: 50px auto;
-  
-      h2 {
+  .scormConverter {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    scale: 1.1;
+    background-color: rgba(232, 230, 230, 0.571);
+    max-width: 400px;
+    margin: 50px auto;
+    list-style: none;
+
+    h2 {
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    .scormConverter__input {
+      margin-top: 20px;
+
+      label {
+        display: block;
         margin-bottom: 10px;
-        font-size: 30px;
+        font-weight: bold;
       }
-  
-      .scormConverter__input {
-        margin-top: 20px;
-  
-        label {
-          display: block;
-          margin-bottom: 10px;
-          font-weight: bold;
-        }
-  
-        input[type="file"] {
-          display: block;
-          margin: 0 auto;
-        }
+
+      input[type="file"] {
+        display: block;
+        margin: 0 auto;
+        padding: 2%;
+        cursor: pointer; /* Añadir cursor de puntero para indicar que es interactivo */
+        background-color: black; /* Estilizar el botón del input */
+        color: white; /* Cambiar el color del texto */
+        border: none; /* Eliminar el borde */
+        padding: 10px 20px; /* Añadir padding para hacer el botón más grande */
+        border-radius: 5px; /* Añadir bordes redondeados */
+        transition: 0.2s;
       }
-    }
-  
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      z-index: 1000;
-  
-      p {
-        margin-top: 10px;
-        font-size: 18px;
+      input[type="file"]:hover 
+      {
+        scale: 1.1;
       }
-  
-      .spinner {
-        border: 8px solid rgba(255, 255, 255, 0.3);
-        border-top: 8px solid #fff;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: spin 1s linear infinite;
-      }
-    }
-  
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
+      
+      input[type="file"]::-webkit-file-upload-button {
+        background-color: white; /* Estilizar el botón del input */
+        color: black; /* Cambiar el color del texto */
+        border: none; /* Eliminar el borde */
+        padding: 10px 20px; /* Añadir padding para hacer el botón más grande */
+        border-radius: 5px; /* Añadir bordes redondeados */
+        cursor: pointer; /* Añadir cursor de puntero para indicar que es interactivo */
+        transition: 0.2s;
       }
     }
   }
+
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 1000;
+
+    p {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .spinner {
+      border: 8px solid rgba(255, 255, 255, 0.3);
+      border-top: 8px solid #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  button
+  {
+    background-color: #fa8a01;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.25s;
+  }
+  button:hover
+  {
+    scale: 1.1;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .mp4Files, .titleFiles
+  {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 0 10% 0;
+  }
   
+  .mp4Files ul, .titleFiles ul
+  {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mp4Files ul li, .titleFiles ul li
+  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+  }
+
+  .no__mp4Files, .no__titleFiles
+  {
+    padding: 2%;
+    border-radius: 20px;
+    margin: 10%;
+    color: white;
+    font-weight: bold;
+    background-color: #ff0015;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .no__mp4Files i , .no__titleFiles i
+  {
+    font-size: 80px
+  }
+
+}

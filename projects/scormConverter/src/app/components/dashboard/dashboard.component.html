@@ -11,7 +11,7 @@
       <p>Loading files, please wait...</p>
     </div>
 
-    <div *ngIf="!isLoading && mp4Files.length > 0">
+    <div *ngIf="!isLoading && mp4Files.length > 0" class="mp4Files">
       <h3>MP4 Files Found:</h3>
       <button (click)="downloadAll()">Download All MP4 Files</button>
       <ul>
@@ -21,11 +21,12 @@
       </ul>
     </div>
 
-    <div *ngIf="!isLoading && mp4Files.length === 0">
+    <div *ngIf="!isLoading && mp4Files.length === 0" class="no__mp4Files">
       <p>No MP4 files found in the selected ZIP.</p>
+      <i class="bi bi-emoji-dizzy"></i>
     </div>
 
-    <div *ngIf="!isLoading && chapterTitles.length > 0">
+    <div *ngIf="!isLoading && chapterTitles.length > 0" class="titleFiles" >
       <h3>Chapter Titles Found:</h3>
       <ul>
         <li *ngFor="let title of chapterTitles">
@@ -34,8 +35,9 @@
       </ul>
     </div>
 
-    <div *ngIf="!isLoading && chapterTitles.length === 0">
+    <div *ngIf="!isLoading && chapterTitles.length === 0" class="no__titleFiles">
       <p>No chapter titles found in the selected ZIP.</p>
+      <i class="bi bi-emoji-dizzy"></i>
     </div>
   </div>
 </div>

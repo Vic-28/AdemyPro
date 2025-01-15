@@ -82,22 +82,15 @@ export class DashboardComponent {
   extractTitles(htmlContent: string): void {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, 'text/html');
-    const matches = htmlContent.match(/"fileName":"(CAP[^"]*)"/g);
+    const matches = htmlContent.match(/"fileName":"([^"]*\.mp4)"/g);
     if (matches) {
       matches.forEach((match) => {
-        const title = match.match(/"fileName":"(CAP[^"]*)"/)?.[1];
+        const title = match.match(/"fileName":"([^"]*\.mp4)"/)?.[1];
         if (title) {
           this.chapterTitles.push(title);
         }
       });
     }
-    // Ordena los títulos de los capítulos de forma ascendente por el número después de "CAP"
-    this.chapterTitles.sort((a, b) => {
-      const numA = parseInt(a.replace('CAP', ''), 10);
-      const numB = parseInt(b.replace('CAP', ''), 10);
-      return numA - numB;
-    });
-    console.log('Hay un total de: ' + this.chapterTitles.length);
   }
 
   // Descarga todos los archivos MP4 como un archivo ZIP
