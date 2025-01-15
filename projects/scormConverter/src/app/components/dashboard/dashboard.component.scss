@@ -10,8 +10,10 @@
     border-radius: 8px;
     scale: 1.1;
     background-color: rgba(232, 230, 230, 0.571);
-    max-width: 800px;
-    height: min-content;
+    max-width: 600px;
+    height: 500px;
+    overflow: scroll;
+    overflow-x: none;
     margin: 50px auto;
     list-style: none;
 
