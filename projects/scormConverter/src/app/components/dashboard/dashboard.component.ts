@@ -82,13 +82,22 @@ export class DashboardComponent {
   extractTitles(htmlContent: string): void {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, 'text/html');
-    const links = doc.querySelectorAll('a[class^="ViewerIndexSubsection"]');
-    links.forEach((link) => {
-      const title = link.textContent?.trim();
-      if (title) {
-        this.chapterTitles.push(title);
-      }
+    const matches = htmlContent.match(/"fileName":"(CAP[^"]*)"/g);
+    if (matches) {
+      matches.forEach((match) => {
+        const title = match.match(/"fileName":"(CAP[^"]*)"/)?.[1];
+        if (title) {
+          this.chapterTitles.push(title);
+        }
+      });
+    }
+    // Ordena los títulos de los capítulos de forma ascendente por el número después de "CAP"
+    this.chapterTitles.sort((a, b) => {
+      const numA = parseInt(a.replace('CAP', ''), 10);
+      const numB = parseInt(b.replace('CAP', ''), 10);
+      return numA - numB;
     });
+    console.log('Hay un total de: ' + this.chapterTitles.length);
   }
 
   // Descarga todos los archivos MP4 como un archivo ZIP
@@ -108,5 +117,7 @@ export class DashboardComponent {
     }).catch((error) => {
       console.error('Error creando el archivo ZIP:', error);
     });
+
+    
   }
 }
