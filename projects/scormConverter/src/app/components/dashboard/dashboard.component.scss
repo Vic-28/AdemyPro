@@ -5,12 +5,13 @@
   
   .scormConverter {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     scale: 1.1;
     background-color: rgba(232, 230, 230, 0.571);
-    max-width: 400px;
+    max-width: 800px;
+    height: min-content;
     margin: 50px auto;
     list-style: none;
 
