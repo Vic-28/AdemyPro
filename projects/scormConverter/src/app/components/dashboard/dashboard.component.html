@@ -1,29 +1,41 @@
 <div class="dashboard">
-    <div class="scormConverter">
-      <h2>Scorm Converter</h2>
-      <p>By Víctor Delgado Batista</p>
-      <div class="scormConverter__input">
-        <label for="input">Select an Scorm Package</label>
-        <input type="file" (change)="onFileSelected($event)" accept=".zip" />
-      </div>
-  
-      <div *ngIf="isLoading" class="loading">
-        <p>Loading files, please wait...</p>
-      </div>
-  
-      <div *ngIf="!isLoading && mp4Files.length > 0">
-        <h3>MP4 Files Found:</h3>
-        <button (click)="downloadAll()">Download All MP4 Files</button>
-        <ul>
-          <li *ngFor="let file of mp4Files">
-            {{ file.name }}
-          </li>
-        </ul>
-      </div>
-  
-      <div *ngIf="!isLoading && mp4Files.length === 0">
-        <p>No MP4 files found in the selected ZIP.</p>
-      </div>
+  <div class="scormConverter">
+    <h2>Scorm Converter</h2>
+    <p>By Víctor Delgado Batista</p>
+    <div class="scormConverter__input">
+      <label for="input">Select an Scorm Package</label>
+      <input type="file" (change)="onFileSelected($event)" accept=".zip" />
+    </div>
+
+    <div *ngIf="isLoading" class="loading">
+      <p>Loading files, please wait...</p>
+    </div>
+
+    <div *ngIf="!isLoading && mp4Files.length > 0">
+      <h3>MP4 Files Found:</h3>
+      <button (click)="downloadAll()">Download All MP4 Files</button>
+      <ul>
+        <li *ngFor="let file of mp4Files">
+          {{ file.name }}
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="!isLoading && mp4Files.length === 0">
+      <p>No MP4 files found in the selected ZIP.</p>
+    </div>
+
+    <div *ngIf="!isLoading && chapterTitles.length > 0">
+      <h3>Chapter Titles Found:</h3>
+      <ul>
+        <li *ngFor="let title of chapterTitles">
+          {{ title }}
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="!isLoading && chapterTitles.length === 0">
+      <p>No chapter titles found in the selected ZIP.</p>
     </div>
   </div>
-  
+</div>

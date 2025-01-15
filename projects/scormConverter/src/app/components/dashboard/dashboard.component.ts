@@ -10,9 +10,16 @@ import { saveAs } from 'file-saver';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  // Indica si se está cargando un archivo
   isLoading: boolean = false;
+  
+  // Almacena los archivos MP4 seleccionados
   mp4Files: { name: string, content: Blob }[] = []; 
+  
+  // Almacena los títulos de los capítulos extraídos
+  chapterTitles: string[] = []; 
 
+  // Maneja el evento de selección de archivo
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) {
@@ -21,7 +28,8 @@ export class DashboardComponent {
     }
 
     this.isLoading = true;
-    this.mp4Files = []; 
+    this.mp4Files = [];
+    this.chapterTitles = []; 
 
     const file = input.files[0];
     const zip = new JSZip();
@@ -33,15 +41,25 @@ export class DashboardComponent {
         zip.loadAsync(data).then((zipContent) => {
           const promises: Promise<void>[] = [];
           zipContent.forEach((relativePath, file) => {
+            
+            // Procesa archivos MP4 dentro del ZIP
             if (relativePath.startsWith('content/assets/') && file.name.toLowerCase().endsWith('.mp4')) {
               const promise = file.async('blob').then((content) => {
                 this.mp4Files.push({ name: file.name, content });
               });
               promises.push(promise);
             }
+
+            // Procesa archivos HTML dentro del ZIP
+            if (file.name.toLowerCase().endsWith('.html')) {
+              const promise = file.async('string').then((content) => {
+                this.extractTitles(content);
+              });
+              promises.push(promise);
+            }
           });
 
-          
+          // Finaliza la carga cuando todas las promesas se resuelven
           Promise.all(promises).then(() => {
             this.isLoading = false;
           });
@@ -60,6 +78,20 @@ export class DashboardComponent {
     reader.readAsArrayBuffer(file);
   }
 
+  // Extrae títulos de capítulos de contenido HTML
+  extractTitles(htmlContent: string): void {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    const links = doc.querySelectorAll('a[class^="ViewerIndexSubsection"]');
+    links.forEach((link) => {
+      const title = link.textContent?.trim();
+      if (title) {
+        this.chapterTitles.push(title);
+      }
+    });
+  }
+
+  // Descarga todos los archivos MP4 como un archivo ZIP
   downloadAll(): void {
     if (this.mp4Files.length === 0) {
       console.warn('No MP4 files to download');
