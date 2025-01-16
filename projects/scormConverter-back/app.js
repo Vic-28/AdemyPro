@@ -3,9 +3,17 @@ const multer = require('multer');
 const JSZip = require('jszip');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors'); // Importar cors
 
 const app = express();
 const PORT = 3000;
+
+// Habilitar CORS
+app.use(cors({
+    origin: 'http://localhost:4200', // Especifica el origen permitido
+    methods: ['GET', 'POST'],       // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
+}));
 
 // Configuración de Multer para manejar la subida de archivos
 const upload = multer({ dest: 'uploads/' });
