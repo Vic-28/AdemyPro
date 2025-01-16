@@ -2,17 +2,22 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver'; 
+import { ScormConverterService } from '../../services/scorm-converter-service.service';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule],
+  providers: [provideHttpClient()],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
   isLoading: boolean = false;
   mp4Files: { name: string, content: Blob }[] = [];
   chapterTitles: string[] = [];
+
+  constructor(private scormService: ScormConverterService) {}
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -22,84 +27,45 @@ export class DashboardComponent {
     }
 
     this.isLoading = true;
-    this.mp4Files = [];
-    this.chapterTitles = [];
 
     const file = input.files[0];
-    const zip = new JSZip();
-    const reader = new FileReader();
 
-    reader.onload = (e) => {
-      const data = e.target?.result;
-      if (data) {
-        zip.loadAsync(data, { checkCRC32: true }).then((zipContent) => {
-          const promises: Promise<void>[] = [];
-
-          zipContent.forEach((relativePath, file) => {
-            // Procesa archivos MP4 dentro del ZIP
-            if (relativePath.startsWith('content/assets/') && file.name.toLowerCase().endsWith('.mp4')) {
-              const promise = file.async('blob').then((content) => {
-                this.mp4Files.push({ name: file.name, content });
-              });
-              promises.push(promise);
-            }
-
-            // Procesa archivos HTML dentro del ZIP
-            if (file.name.toLowerCase().endsWith('.html')) {
-              const promise = file.async('string').then((content) => {
-                this.extractTitles(content);
-              });
-              promises.push(promise);
-            }
-          });
-
-          // Espera a que todas las promesas se resuelvan
-          Promise.all(promises).then(() => {
-            this.isLoading = false;
-          });
-        }).catch((error) => {
-          console.error('Error procesando el archivo ZIP:', error);
-          this.isLoading = false;
-        });
+    // Usa el servicio para procesar el archivo
+    this.scormService.uploadFile(file).subscribe({
+      next: (blob) => {
+        // Procesa el archivo devuelto si es necesario
+        this.extractFilesFromBlob(blob);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error subiendo el archivo:', err);
+        this.isLoading = false;
       }
-    };
-
-    reader.onerror = (error) => {
-      console.error('Error leyendo el archivo:', error);
-      this.isLoading = false;
-    };
-
-    reader.readAsArrayBuffer(file);
+    });
   }
 
-  // Extrae títulos de capítulos de contenido HTML
-  extractTitles(htmlContent: string): void {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, 'text/html');
-    const matches = htmlContent.match(/"fileName":"([^"]*\.mp4)"/g);
-    if (matches) {
-      const titles = matches.map((match) => {
-        return match.match(/"fileName":"([^"]*\.mp4)"/)?.[1];
-      }).filter(title => title !== undefined) as string[];
-
-      // Ordenar los títulos de forma ascendente
-      titles.sort((a, b) => {
-        const numA = a.match(/\d+/);
-        const numB = b.match(/\d+/);
-        if (numA && numB) {
-          return parseInt(numA[0], 10) - parseInt(numB[0], 10);
+  extractFilesFromBlob(blob: Blob): void {
+    JSZip.loadAsync(blob).then((zip) => {
+      zip.forEach((relativePath, file) => {
+        if (relativePath.endsWith('.mp4')) {
+          file.async('blob').then((content) => {
+            this.mp4Files.push({ name: relativePath, content });
+          });
         }
-        return a.localeCompare(b);
+        if (relativePath.endsWith('.txt')) {
+          file.async('string').then((content) => {
+            this.chapterTitles.push(content);
+          });
+        }
       });
-
-      this.chapterTitles.push(...titles);
-    }
+    }).catch((err) => {
+      console.error('Error procesando el ZIP:', err);
+    });
   }
 
-  // Descarga todos los archivos MP4 como un archivo ZIP
   downloadAll(): void {
     if (this.mp4Files.length === 0) {
-      console.warn('No MP4 files to download');
+      console.error('No MP4 files to download');
       return;
     }
 
@@ -108,10 +74,10 @@ export class DashboardComponent {
       zip.file(file.name, file.content);
     });
 
-    zip.generateAsync({ type: 'blob' }).then((zipBlob) => {
-      saveAs(zipBlob, 'mp4_files.zip');
-    }).catch((error) => {
-      console.error('Error creando el archivo ZIP:', error);
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, 'mp4-files.zip');
+    }).catch((err) => {
+      console.error('Error al generar el ZIP:', err);
     });
   }
 }

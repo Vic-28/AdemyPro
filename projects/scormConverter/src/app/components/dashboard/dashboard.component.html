@@ -2,42 +2,55 @@
   <div class="scormConverter">
     <h2>Scorm Converter</h2>
     <p>By Víctor Delgado Batista</p>
+
+    <!-- Input para seleccionar el archivo ZIP -->
     <div class="scormConverter__input">
-      <label for="input">Select an Scorm Package</label>
-      <input type="file" (change)="onFileSelected($event)" accept=".zip" />
+      <label for="scormFile">Select a SCORM Package</label>
+      <input
+        type="file"
+        id="scormFile"
+        (change)="onFileSelected($event)"
+        accept=".zip"
+      />
     </div>
 
+    <!-- Mensaje de carga -->
     <div *ngIf="isLoading" class="loading">
-      <p>Loading files, please wait...</p>
+      <p>Processing your SCORM package, please wait...</p>
+      <div class="spinner"></div>
     </div>
 
+    <!-- Archivos MP4 encontrados -->
     <div *ngIf="!isLoading && mp4Files.length > 0" class="mp4Files">
       <h3>MP4 Files Found:</h3>
       <button (click)="downloadAll()">Download All MP4 Files</button>
       <ul>
         <li *ngFor="let file of mp4Files">
-          {{ file.name }}
+          <i class="bi bi-file-earmark-play"></i> {{ file.name }}
         </li>
       </ul>
     </div>
 
+    <!-- Mensaje si no hay archivos MP4 -->
     <div *ngIf="!isLoading && mp4Files.length === 0" class="no__mp4Files">
-      <p>No MP4 files found in the selected ZIP.</p>
-      <i class="bi bi-emoji-dizzy"></i>
+      <p>No MP4 files were found in the selected ZIP package.</p>
+      <i class="bi bi-emoji-frown"></i>
     </div>
 
-    <div *ngIf="!isLoading && chapterTitles.length > 0" class="titleFiles" >
+    <!-- Títulos de capítulos encontrados -->
+    <div *ngIf="!isLoading && chapterTitles.length > 0" class="titleFiles">
       <h3>Chapter Titles Found:</h3>
       <ul>
         <li *ngFor="let title of chapterTitles">
-          {{ title }}
+          <i class="bi bi-list-task"></i> {{ title }}
         </li>
       </ul>
     </div>
 
+    <!-- Mensaje si no hay títulos -->
     <div *ngIf="!isLoading && chapterTitles.length === 0" class="no__titleFiles">
-      <p>No chapter titles found in the selected ZIP.</p>
-      <i class="bi bi-emoji-dizzy"></i>
+      <p>No chapter titles were found in the selected ZIP package.</p>
+      <i class="bi bi-emoji-frown"></i>
     </div>
   </div>
 </div>
