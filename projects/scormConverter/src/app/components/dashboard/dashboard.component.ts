@@ -10,16 +10,10 @@ import { saveAs } from 'file-saver';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  // Indica si se está cargando un archivo
   isLoading: boolean = false;
-  
-  // Almacena los archivos MP4 seleccionados
-  mp4Files: { name: string, content: Blob }[] = []; 
-  
-  // Almacena los títulos de los capítulos extraídos
-  chapterTitles: string[] = []; 
+  mp4Files: { name: string, content: Blob }[] = [];
+  chapterTitles: string[] = [];
 
-  // Maneja el evento de selección de archivo
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) {
@@ -29,19 +23,19 @@ export class DashboardComponent {
 
     this.isLoading = true;
     this.mp4Files = [];
-    this.chapterTitles = []; 
+    this.chapterTitles = [];
 
     const file = input.files[0];
     const zip = new JSZip();
-
     const reader = new FileReader();
+
     reader.onload = (e) => {
       const data = e.target?.result;
       if (data) {
-        zip.loadAsync(data).then((zipContent) => {
+        zip.loadAsync(data, { checkCRC32: true }).then((zipContent) => {
           const promises: Promise<void>[] = [];
+
           zipContent.forEach((relativePath, file) => {
-            
             // Procesa archivos MP4 dentro del ZIP
             if (relativePath.startsWith('content/assets/') && file.name.toLowerCase().endsWith('.mp4')) {
               const promise = file.async('blob').then((content) => {
@@ -59,7 +53,7 @@ export class DashboardComponent {
             }
           });
 
-          // Finaliza la carga cuando todas las promesas se resuelven
+          // Espera a que todas las promesas se resuelvan
           Promise.all(promises).then(() => {
             this.isLoading = false;
           });
@@ -115,11 +109,9 @@ export class DashboardComponent {
     });
 
     zip.generateAsync({ type: 'blob' }).then((zipBlob) => {
-      saveAs(zipBlob, 'mp4_files.zip'); 
+      saveAs(zipBlob, 'mp4_files.zip');
     }).catch((error) => {
       console.error('Error creando el archivo ZIP:', error);
     });
-
-    
   }
 }
