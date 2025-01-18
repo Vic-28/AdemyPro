@@ -10,7 +10,7 @@ const PORT = 3000;
 
 // Habilitar CORS
 app.use(cors({
-    origin: 'http://localhost:4200', // Especifica el origen permitido
+    origin: ['http://localhost:4200','*'], // Especifica el origen permitido
     methods: ['GET', 'POST'],       // Métodos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'] // Encabezados permitidos
 }));
