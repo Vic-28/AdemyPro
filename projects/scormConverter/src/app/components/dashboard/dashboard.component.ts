@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver'; 
 import { ScormConverterService } from '../../services/scorm-converter-service.service';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule],
-  providers: [provideHttpClient()],
+  providers: [],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
